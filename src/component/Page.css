@@ -1,0 +1,3 @@
+.simple-modal-title {position: absolute;top: 0; left: 0; right: 0; height: 50px;}
+.simple-modal-description {position: absolute; top: 100px; left: 0; right: 0; bottom: 0;}
+.simple-modal-description iframe {display: block; width: 100%; height: 100%; border: none;}
