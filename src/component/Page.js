@@ -1,51 +1,56 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Modal from "@material-ui/core/Modal";
-import { makeStyles } from '@material-ui/core/styles';
-
-import "./Page.css";
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    position: 'absolute',
+    position: "absolute",
     width: "90%",
     height: "90%",
     top: "5%",
     left: "5%",
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    //padding: theme.spacing(2, 4, 3),
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5]
   },
+  title: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 50
+  },
+  description: {
+    position: "absolute",
+    top: 100,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  iframe: {
+    display: "block",
+    width: "100%",
+    height: "100%",
+    border: "none"
+  }
 }));
 
 export default function Page(props) {
-  const info = props.state;
+  const { info, open, onClose } = props;
+  const { title, htmlPath } = info || {};
 
-  //fetch(props.location.state.htmlPath).then(res => res.text()).then(setHtml)
-  
-  useEffect(() => {
-    console.log("start")
-  }, [])
+  const classes = useStyles();
 
-  return info && (
-    <Modal
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
-      open={props.open}
-      onClose={props.onClose}
-    >
-      <div className={"page-div " + props.className} style={props.style}>
-        <h2 className="simple-modal-title">
-          {info.title}
-        </h2>
-        <div className="simple-modal-description">
-          <iframe style={{width: "100%", height: "100%"}} src={info.htmlPath}></iframe>
+  if (!info) return <></>;
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <div className={classes.paper}>
+        <h2 className={classes.title}>{title}</h2>
+        <div className={classes.description}>
+          <iframe className={classes.iframe} src={`/backtesting/html/${htmlPath}`} title={htmlPath} />
         </div>
       </div>
     </Modal>
-  )
+  );
 }
